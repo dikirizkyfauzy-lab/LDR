@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Our Long Distance Relationship Story</title>
+<meta name="theme-color" content="#eaf6ff">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f3f9ff;--bg2:#fff;--card:#fff;--w:#fff;--ink:#2d4a6b;--soft:#6f8fb0;--blue:#8fcfff;--blue2:#cfeaff;--yellow:#ffd96a;--yellow2:#fff3c4;--line:#d7ebfb;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;--bg:#16263a;--bg2:#1b2f46;--card:#20374f;--ink:#eaf4ff;--soft:#9fbcd9;--blue:#5aaee8;--blue2:#2b4a68;--yellow:#ffd96a;--yellow2:#4a4224;--line:#2f4b68}}
+:root[data-theme="dark"]{color-scheme:dark;--bg:#16263a;--bg2:#1b2f46;--card:#20374f;--ink:#eaf4ff;--soft:#9fbcd9;--blue:#5aaee8;--blue2:#2b4a68;--yellow:#ffd96a;--yellow2:#4a4224;--line:#2f4b68}
+*{box-sizing:border-box}
+body{margin:0;font-family:'Fredoka','Trebuchet MS',system-ui,sans-serif;color:var(--ink);background:linear-gradient(180deg,var(--bg) 0%,var(--w) 45%,var(--bg) 100%);min-height:100vh;overflow-x:hidden}
+.wrap{max-width:760px;margin:0 auto;padding:20px 16px 48px;position:relative}
+.cloud{position:absolute;background:var(--card);border-radius:50px;opacity:.8;z-index:0}
+.cloud::before,.cloud::after{content:"";position:absolute;background:inherit;border-radius:50%}
+.c1{width:90px;height:28px;top:30px;left:-10px}.c1::before{width:40px;height:40px;top:-18px;left:14px}.c1::after{width:30px;height:30px;top:-12px;left:44px}
+.c2{width:70px;height:22px;top:90px;right:-8px}.c2::before{width:32px;height:32px;top:-14px;left:10px}.c2::after{width:24px;height:24px;top:-9px;left:34px}
+.star{position:absolute;color:var(--yellow);font-size:20px;animation:tw 2.5s ease-in-out infinite;z-index:0}
+@keyframes tw{50%{transform:scale(1.3) rotate(15deg);opacity:.6}}
+header{text-align:center;position:relative;z-index:1;padding:26px 0 8px}
+h1{margin:0;font-size:clamp(28px,7vw,42px);font-weight:600}
+h1 span{color:var(--blue)}
+.names{display:flex;gap:8px;justify-content:center;align-items:center;margin-top:10px}
+.names input{width:120px;text-align:center;font:inherit;font-weight:500;color:var(--ink);background:var(--yellow2);border:2px dashed var(--yellow);border-radius:20px;padding:6px 10px}
+.card{position:relative;z-index:1;background:var(--card);border:2px solid var(--line);border-radius:28px;padding:20px;margin-top:20px;box-shadow:0 6px 0 var(--blue2)}
+h2{margin:0 0 4px;font-size:22px;font-weight:600}
+.sub{color:var(--soft);font-size:14px;margin:0 0 14px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.grid.two{grid-template-columns:repeat(3,1fr)}
+.tile{background:var(--blue2);border-radius:20px;text-align:center;padding:12px 4px}
+.tile:nth-child(3n+2){background:var(--yellow2)}
+.tile b{display:block;font-size:clamp(24px,7vw,34px);font-weight:600}
+.tile small{color:var(--soft);font-size:13px}
+.big{text-align:center;margin-top:14px;color:var(--soft);font-size:15px}
+button{font:inherit;cursor:pointer;border:0;border-radius:18px;padding:10px 18px;font-weight:500;color:#2d4a6b;background:var(--yellow);box-shadow:0 4px 0 #e6b93d;transition:transform .1s}
+button:active{transform:translateY(3px);box-shadow:0 1px 0 #e6b93d}
+button.ghost{background:transparent;color:var(--soft);box-shadow:none;padding:6px 10px;font-size:14px}
+button.blue{background:var(--blue);box-shadow:0 4px 0 #5aaee8}
+.start{text-align:center}
+.start input,.add input,.add select{font:inherit;color:var(--ink);background:var(--bg);border:2px solid var(--line);border-radius:16px;padding:9px 12px;min-width:0}
+.start .row{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:10px}
+.heart{font-size:56px;display:block;animation:beat 1.4s infinite}
+@keyframes beat{15%{transform:scale(1.15)}30%{transform:scale(1)}45%{transform:scale(1.1)}}
+.add{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.add input[type=text]{flex:1;min-width:140px}
+ul{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+li{display:flex;align-items:center;gap:10px;background:var(--bg);border-radius:18px;padding:10px 12px}
+li .t{flex:1;word-break:break-word}
+li.done .t{text-decoration:line-through;color:var(--soft)}
+li input[type=checkbox]{width:22px;height:22px;accent-color:#ffb800;flex:none}
+.tag{font-size:12px;background:var(--blue2);border-radius:12px;padding:2px 9px;color:var(--soft)}
+li .x{background:none;box-shadow:none;padding:2px 8px;color:var(--soft);font-size:18px}
+.empty{text-align:center;color:var(--soft);padding:10px}
+footer{text-align:center;color:var(--soft);margin-top:28px;font-size:14px;position:relative;z-index:1}
+.bgh{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:0}
+.bgh span{position:absolute;bottom:-40px;opacity:.35;animation:rise linear infinite;will-change:transform}
+@keyframes rise{to{transform:translateY(-115vh) rotate(25deg)}}
+.pt{position:fixed;pointer-events:none;z-index:50;margin:-8px 0 0 -8px;animation:fly .9s ease-out forwards}
+@keyframes fly{to{transform:translate(var(--dx),var(--dy)) scale(.4) rotate(40deg);opacity:0}}
+.cf{position:fixed;top:-30px;pointer-events:none;z-index:50;animation:fall linear forwards}
+@keyframes fall{to{transform:translateY(105vh) rotate(360deg)}}
+.cloud{translate:calc(var(--mx,0)*34px) calc(var(--my,0)*14px);transition:translate .3s ease-out;animation:drift 9s ease-in-out infinite alternate}
+@keyframes drift{to{transform:translateX(18px)}}
+.rv{opacity:0;transform:translateY(26px) scale(.97);transition:opacity .6s,transform .6s}
+.rv.in{opacity:1;transform:none}
+h1{animation:float 4s ease-in-out infinite}
+@keyframes float{50%{transform:translateY(-5px)}}
+.tile{transition:transform .2s}
+.tile:hover{transform:translateY(-4px) rotate(-2deg)}
+.tile:last-child b{animation:pop .4s}
+@keyframes pop{0%{transform:scale(.6)}60%{transform:scale(1.2)}100%{transform:scale(1)}}
+li{transition:transform .15s}
+li:hover{transform:translateX(4px)}
+li.new{animation:pop .45s}
+button{transition:transform .1s,filter .2s}
+button:hover{filter:brightness(1.06);transform:translateY(-2px)}
+button:active{transform:translateY(3px)}
+.note{min-height:22px;margin:12px 0 0;color:var(--soft);font-size:15px;opacity:0;transition:opacity .4s}
+.note.show{opacity:1}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}.note{opacity:1}}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--w:#27425d}}
+:root[data-theme="dark"]{--w:#27425d}
+.cloud{filter:drop-shadow(0 3px 0 var(--blue2))}
+.c3{width:110px;height:32px;top:430px;left:-30px;opacity:.95}.c3::before{width:48px;height:48px;top:-22px;left:18px}.c3::after{width:36px;height:36px;top:-14px;left:56px}
+.c4{width:90px;height:26px;top:780px;right:-20px;opacity:.95}.c4::before{width:38px;height:38px;top:-18px;left:12px}.c4::after{width:28px;height:28px;top:-11px;left:44px}
+.card{border:3px solid var(--w);outline:2px solid var(--line);box-shadow:0 6px 0 var(--blue2),0 14px 30px rgba(143,207,255,.25)}
+.tile{background:var(--w);border:2px solid var(--blue2)}
+li{background:var(--w);border:2px solid var(--line)}
+.start input,.add input,.add select{background:var(--w)}
+.names input{background:var(--w);border-color:var(--yellow)}
+.tag{background:var(--w);border:1px solid var(--blue2)}
+.note{display:inline-block;background:var(--w);border:2px solid var(--line);border-radius:20px;padding:6px 16px}
+footer{background:var(--w);border:2px solid var(--line);border-radius:30px;padding:10px 18px;width:fit-content;max-width:100%;margin:28px auto 0}
+html{-webkit-text-size-adjust:100%;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+body{min-height:100dvh}
+.wrap{padding-left:max(16px,env(safe-area-inset-left));padding-right:max(16px,env(safe-area-inset-right))}
+input,select,button{font-size:16px;-webkit-appearance:none;appearance:none;border-radius:16px}
+input[type=checkbox]{-webkit-appearance:auto;appearance:auto;width:26px;height:26px}
+.add select{padding-right:14px}
+input[type=datetime-local]{min-height:46px;min-width:210px;text-align:center}
+button{min-height:44px;-webkit-user-select:none;user-select:none}
+li .x{min-width:44px;min-height:44px;font-size:20px}
+button.ghost{min-height:40px}
+.names input{min-height:44px;border-radius:20px}
+@media (max-width:480px){.wrap{padding-top:10px}.card{padding:16px;border-radius:24px}.add input[type=text]{flex:1 1 100%}.add select{flex:1}.add button{flex:0 0 auto}.grid{gap:8px}.tile{padding:10px 2px}h2{font-size:20px}}
+@media (hover:none){button:hover{transform:none;filter:none}.tile:hover,li:hover{transform:none}button:active{transform:translateY(3px)}}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.row2{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+.btn{display:inline-block;text-decoration:none;font-weight:500;color:#2d4a6b;background:var(--yellow);box-shadow:0 4px 0 #e6b93d;border-radius:18px;padding:11px 16px;min-height:44px}
+.btn:active{transform:translateY(3px)}
+.tips{margin-top:14px;color:var(--soft);font-size:14px;line-height:1.55;display:grid;gap:4px}
+li small{color:var(--soft)}
+.pst{position:relative;flex:none;width:54px;height:76px;border-radius:12px;overflow:hidden;display:grid;place-items:center;font-size:26px;cursor:pointer;border:2px solid var(--w);box-shadow:0 2px 0 var(--blue2)}
+.pst img{width:100%;height:100%;object-fit:cover;display:block}
+.pst input{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer;border-radius:0}
+li.done .pst{filter:grayscale(.6);opacity:.7}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="cloud c1"></div><div class="cloud c2"></div><div class="cloud c3"></div><div class="cloud c4"></div>
+<span class="star" style="top:50px;right:20%">✦</span><span class="star" style="top:140px;left:8%;animation-delay:.8s">★</span><span class="star" style="top:230px;right:6%;animation-delay:1.4s">✦</span>
+
+<header>
+<h1>Our <span>Long Distance Relationship</span> Story 💛</h1>
+
+<p class="note" id="note"></p>
+</header>
+
+<section class="card" id="counter"></section>
+
+<section class="card">
+<h2>🎬 Watch List</h2><p class="sub">Movies and shows we want to watch together. Tap a cover to add a real poster.</p>
+<div class="add"><input type="text" id="watch-in" placeholder="Add a title…" maxlength="80"><select id="watch-tag"><option>Movie</option><option>Series</option><option>Anime</option></select><button class="blue" id="watch-btn">Add</button></div>
+<ul id="watch"></ul>
+</section>
+
+<section class="card">
+<h2>🎮 Game List</h2><p class="sub">Games we want to play together. Tap a cover to add a real picture.</p>
+<div class="add"><input type="text" id="game-in" placeholder="Add a game…" maxlength="80"><select id="game-tag"><option>PC</option><option>Console</option><option>Mobile</option></select><button class="blue" id="game-btn">Add</button></div>
+<ul id="game"></ul>
+</section>
+
+<section class="card">
+<h2>🌷 What We Do When We Meet</h2><p class="sub">Our dream list for the day we’re finally together.</p>
+<div class="add"><input type="text" id="meet-in" placeholder="Add something to do…" maxlength="100"><button class="blue" id="meet-btn">Add</button></div>
+<ul id="meet"></ul>
+</section>
+
+<section class="card" id="fly">
+<h2>✈️ Cheap Flights: Bandung ⇄ Bali</h2>
+<p class="sub">Bandung ⇄ Bali, both directions.</p>
+<div class="tabs"><button class="blue" id="t1">Bandung → Bali</button><button class="ghost" id="t2">Bali → Bandung</button></div>
+<div id="fbody"></div>
+
+</section>
+
+<footer>Made with love, until the distance becomes zero 🌙</footer>
+</div>
+
+<script>
+const S={get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+const $=id=>document.getElementById(id);
+
+/* names */
+
+
+/* counter */
+let timer=null;
+const pad=n=>String(n).padStart(2,'0');
+function diff(a,b){let y=b.getFullYear()-a.getFullYear(),m=b.getMonth()-a.getMonth(),d=b.getDate()-a.getDate(),h=b.getHours()-a.getHours(),mi=b.getMinutes()-a.getMinutes(),s=b.getSeconds()-a.getSeconds();
+if(s<0){s+=60;mi--}if(mi<0){mi+=60;h--}if(h<0){h+=24;d--}
+if(d<0){d+=new Date(b.getFullYear(),b.getMonth(),0).getDate();m--}
+if(m<0){m+=12;y--}return{y,m,d,h,mi,s}}
+function localISO(dt){return new Date(dt.getTime()-dt.getTimezoneOffset()*60000).toISOString().slice(0,16)}
+function renderCounter(){
+ clearInterval(timer);
+ const el=$('counter'),start=S.get('ldrStart',null);
+ if(!start){
+  el.innerHTML='<div class="start"><span class="heart">💙</span><h2>Ready to count our days?</h2><p class="sub">Press the button when your LDR begins, or pick the day it already started.</p><div class="row"><input type="datetime-local" id="sd"><button id="go">Start LDR 💛</button></div></div>';
+  $('sd').value=localISO(new Date());
+  $('go').onclick=()=>{const v=$('sd').value;const dt=v?new Date(v):new Date();S.set('ldrStart',dt.toISOString());renderCounter();party(36)};
+  return}
+ const a=new Date(start);
+ el.innerHTML='<h2>⏳ Our LDR Counter</h2><p class="sub">Every second brings us closer 💛</p><div class="grid" id="g"></div><div class="big" id="tot"></div><div style="text-align:center;margin-top:10px"><button class="ghost" id="ed">✏️ Change date</button><button class="blue" id="rs">↺ Reset</button></div><div id="edbox"></div>';
+ const tick=()=>{const n=new Date(),f=n<a?{y:0,m:0,d:0,h:0,mi:0,s:0}:diff(a,n);
+  const t=[[f.y,'Years'],[f.m,'Months'],[f.d,'Days'],[pad(f.h),'Hours'],[pad(f.mi),'Minutes'],[pad(f.s),'Seconds']];
+  $('g').innerHTML=t.map(x=>'<div class="tile"><b>'+x[0]+'</b><small>'+x[1]+'</small></div>').join('');
+  const days=Math.max(0,Math.floor((n-a)/864e5));
+  $('tot').textContent='That’s '+days.toLocaleString('en-US')+' days of loving each other from afar ✨';};
+ tick();timer=setInterval(tick,1000);
+ $('ed').onclick=()=>{$('edbox').innerHTML='<div class="start"><div class="row"><input type="datetime-local" id="sd"><button class="blue" id="sv">Save</button></div></div>';$('sd').value=localISO(a);$('sv').onclick=()=>{const v=$('sd').value;if(v){S.set('ldrStart',new Date(v).toISOString());renderCounter()}}};
+ $('rs').onclick=()=>{$('edbox').innerHTML='<div class="start"><p class="sub" style="margin:10px 0 0">Reset the counter and start over?</p><div class="row"><button id="yes">Yes, reset</button><button class="ghost" id="no">Cancel</button></div></div>';$('yes').onclick=()=>{S.set('ldrStart',null);renderCounter()};$('no').onclick=()=>{$('edbox').innerHTML=''}};
+}
+renderCounter();
+
+/* lists */
+const ICON={Movie:'🎬',Series:'📺',Anime:'🌸',PC:'🖥️',Console:'🎮',Mobile:'📱'};
+function shrink(file,cb){const r=new FileReader();r.onload=()=>{const im=new Image();im.onload=()=>{const s=Math.min(1,200/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=Math.round(im.width*s);c.height=Math.round(im.height*s);c.getContext('2d').drawImage(im,0,0,c.width,c.height);cb(c.toDataURL('image/jpeg',.72))};im.onerror=()=>cb(null);im.src=r.result};r.onerror=()=>cb(null);r.readAsDataURL(file)}
+function makeList(key,hasTag){
+ let items=S.get(key,[]);
+ const ul=$(key),inp=$(key+'-in'),tag=hasTag?$(key+'-tag'):null;
+ const save=()=>S.set(key,items);
+ function poster(it,i){
+  const b=document.createElement('label');b.title='Tap to add a poster';
+  b.className='pst';
+  if(it.im){const im=document.createElement('img');im.src=it.im;im.alt='';b.appendChild(im)}
+  else{let h=0;for(const ch of it.t)h=(h*31+ch.charCodeAt(0))%360;b.style.background='linear-gradient(135deg,hsl('+(190+h%50)+' 80% 82%),hsl('+(40+h%20)+' 95% 80%))';b.append(ICON[it.g]||'🎞️')}
+  const f=document.createElement('input');f.type='file';f.accept='image/*';f.setAttribute('aria-label','Add poster');
+  f.onchange=()=>{const file=f.files[0];if(!file)return;shrink(file,d=>{if(d){items[i].im=d;save();draw()}})};
+  b.appendChild(f);return b;
+ }
+ function draw(){
+  ul.innerHTML='';
+  if(!items.length){const e=document.createElement('div');e.className='empty';e.textContent='Nothing here yet. Add the first one! 🌟';ul.appendChild(e);return}
+  items.forEach((it,i)=>{
+   const li=document.createElement('li');if(it.x)li.className='done';
+   const c=document.createElement('input');c.type='checkbox';c.checked=!!it.x;
+   c.onchange=()=>{items[i].x=c.checked;save();draw();if(c.checked)party(14)};
+   const t=document.createElement('span');t.className='t';t.textContent=it.t;
+   li.append(c,...(hasTag?[poster(it,i)]:[]),t);
+   if(it.g){const g=document.createElement('span');g.className='tag';g.textContent=it.g;li.appendChild(g)}
+   const x=document.createElement('button');x.className='x';x.textContent='✕';x.setAttribute('aria-label','Delete');
+   x.onclick=()=>{items.splice(i,1);save();draw()};
+   li.appendChild(x);ul.appendChild(li)});
+ }
+ function add(){const v=inp.value.trim();if(!v)return;items.unshift({t:v,g:tag?tag.value:'',x:false});inp.value='';save();draw();ul.firstChild.classList.add('new')}
+ $(key+'-btn').onclick=add;
+ inp.addEventListener('keydown',e=>{if(e.key==='Enter')add()});
+ draw();
+}
+makeList('watch',true);makeList('game',true);makeList('meet',false);
+
+/* magic */
+const RM=matchMedia('(prefers-reduced-motion:reduce)').matches;
+const EM=['💛','💙','✨','⭐','🤍'];
+const pick=()=>EM[Math.random()*EM.length|0];
+function fly(x,y,n){if(RM)return;for(let i=0;i<n;i++){const p=document.createElement('span');p.className='pt';p.textContent=pick();const a=Math.random()*6.28,r=40+Math.random()*70;p.style.cssText='left:'+x+'px;top:'+y+'px;--dx:'+Math.cos(a)*r+'px;--dy:'+(Math.sin(a)*r-30)+'px;font-size:'+(12+Math.random()*12)+'px';p.onanimationend=()=>p.remove();document.body.appendChild(p)}}
+function party(n){if(RM)return;for(let i=0;i<n;i++){const p=document.createElement('span');p.className='cf';p.textContent=pick();p.style.cssText='left:'+Math.random()*100+'vw;font-size:'+(14+Math.random()*14)+'px;animation-duration:'+(1.6+Math.random()*1.6)+'s;animation-delay:'+Math.random()*.4+'s';p.onanimationend=()=>p.remove();document.body.appendChild(p)}}
+document.addEventListener('click',e=>fly(e.clientX,e.clientY,7));
+
+if(!RM){const bg=document.createElement('div');bg.className='bgh';for(let i=0;i<12;i++){const s=document.createElement('span');s.textContent=i%3?'💙':'💛';s.style.cssText='left:'+Math.random()*100+'%;font-size:'+(14+Math.random()*18)+'px;animation-duration:'+(12+Math.random()*14)+'s;animation-delay:-'+Math.random()*20+'s';bg.appendChild(s)}document.body.appendChild(bg)}
+
+let raf=0;
+document.addEventListener('pointermove',e=>{if(RM||raf)return;raf=requestAnimationFrame(()=>{raf=0;const r=document.documentElement.style;r.setProperty('--mx',e.clientX/innerWidth-.5);r.setProperty('--my',e.clientY/innerHeight-.5)})});
+
+if('IntersectionObserver' in window&&!RM){const io=new IntersectionObserver(es=>es.forEach(en=>{if(en.isIntersecting){en.target.classList.add('in');io.unobserve(en.target)}}),{threshold:.1});document.querySelectorAll('.card').forEach(c=>{c.classList.add('rv');io.observe(c)})}
+
+const NOTES=['Distance means so little when someone means so much 💙','Every day apart is one day closer to you 💛','Same moon, same sky, same us 🌙','Counting the days until I can hug you ✨','You are my favorite notification 💌'];
+let ni=0;const nt=$('note');
+function showNote(){nt.classList.remove('show');setTimeout(()=>{nt.textContent=NOTES[ni++%NOTES.length];nt.classList.add('show')},400)}
+showNote();setInterval(showNote,5000);
+
+/* flights */
+const FL=[
+{a:'bdo',b:'dps',rows:[['Super Air Jet','09:10 → 11:50','Often the cheapest'],['Citilink','09:55 → 12:40','Seen around Rp1.7 jt (Aug 2026)'],['Garuda Indonesia','13:30 → 16:20','Full service, usually pricier']]},
+{a:'dps',b:'bdo',rows:[['Garuda Indonesia','11:55 → 12:45','Full service, usually pricier'],['Citilink','13:10 → 14:10','Direct, daily'],['Super Air Jet','17:20 → 18:10','Often the cheapest']]}];
+let ft=0;
+function drawFly(){
+ const d=FL[ft];
+ $('t1').className=ft?'ghost':'blue';$('t2').className=ft?'blue':'ghost';
+ 
+ $('fbody').innerHTML=''+
+ 
+ '<div class="sub" style="margin:18px 0 8px"><b>🏷️ Our cheap finds</b> — save every good price you spot.</div><div class="add"><input type="date" id="lgd" aria-label="Flight date"><input type="text" inputmode="numeric" id="lgp" placeholder="Price in Rp, e.g. 1250000" maxlength="10"><input type="text" id="lga" placeholder="Airline / website (optional)" maxlength="40"><button class="blue" id="bs">Save</button></div><ul id="lglist"></ul>';
+ const show=()=>renderLog(ft);
+ show();
+ 
+ $('bs').onclick=()=>addLog(ft);
+}
+function addLog(i){
+ const k='log'+i,d=$('lgd').value,p=parseInt($('lgp').value.replace(/\D/g,''),10),a=$('lga').value.trim();
+ if(!p){$('lgp').focus();return}
+ const L=S.get(k,[]);L.push({d,p,a});S.set(k,L);
+ $('lgd').value='';$('lgp').value='';$('lga').value='';
+ party(10);renderLog(i);
+}
+function renderLog(i){
+ const k='log'+i,ul=$('lglist'),L=S.get(k,[]).map((e,x)=>({d:e.d,p:e.p,a:e.a,x})).sort((m,n)=>m.p-n.p);
+ ul.innerHTML='';
+ if(!L.length){const e=document.createElement('div');e.className='empty';e.textContent='No prices saved yet. Add the first cheap find! ✈️';ul.appendChild(e);return}
+ L.forEach((e,j)=>{
+  const li=document.createElement('li'),t=document.createElement('span');t.className='t';
+  const b=document.createElement('b');b.textContent='Rp '+e.p.toLocaleString('id-ID');
+  const s=document.createElement('small');
+  s.textContent=' · '+(e.d?new Date(e.d+'T00:00').toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'}):'Any date')+(e.a?' · '+e.a:'');
+  t.append(b,s);li.appendChild(t);
+  if(!j){const g=document.createElement('span');g.className='tag';g.textContent='🏆 Cheapest';li.appendChild(g)}
+  const x=document.createElement('button');x.className='x';x.textContent='✕';x.setAttribute('aria-label','Delete');
+  x.onclick=()=>{const A=S.get(k,[]);A.splice(e.x,1);S.set(k,A);renderLog(i)};
+  li.appendChild(x);ul.appendChild(li);
+ });
+}
+$('t1').onclick=()=>{ft=0;drawFly()};$('t2').onclick=()=>{ft=1;drawFly()};drawFly();
+</script>
+</body>
+</html>
