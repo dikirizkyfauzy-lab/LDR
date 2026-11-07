@@ -116,6 +116,13 @@ li small{color:var(--soft)}
 .pst img{width:100%;height:100%;object-fit:cover;display:block}
 .pst input{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer;border-radius:0}
 li.done .pst{filter:grayscale(.6);opacity:.7}
+.sg{display:grid;gap:6px;margin:-4px 0 12px}
+.sg:empty{display:none}
+.sgi{display:flex;align-items:center;gap:10px;text-align:left;background:var(--w);color:var(--ink);border:2px solid var(--line);border-radius:16px;box-shadow:none;padding:6px 10px;min-height:60px;width:100%}
+.sgi img{width:36px;height:52px;object-fit:cover;border-radius:8px;flex:none;background:var(--blue2)}
+.sgi small{display:block;color:var(--soft)}
+.cr{text-align:center;color:var(--soft);font-size:12px;margin-top:12px;position:relative;z-index:1}
+.cr a{color:inherit}
 </style>
 </head>
 <body>
@@ -158,6 +165,7 @@ li.done .pst{filter:grayscale(.6);opacity:.7}
 </section>
 
 <footer>Made with love, until the distance becomes zero 🌙</footer>
+<div class="cr">Movie &amp; TV data from <a href="https://www.themoviedb.org" target="_blank" rel="noopener">TMDB</a>. This product uses the TMDB API but is not endorsed or certified by TMDB. Game images from <a href="https://store.steampowered.com" target="_blank" rel="noopener">Steam</a>.</div>
 </div>
 
 <script>
@@ -198,6 +206,7 @@ renderCounter();
 
 /* lists */
 const ICON={Movie:'🎬',Series:'📺',Anime:'🌸',PC:'🖥️',Console:'🎮',Mobile:'📱'};
+function fb(im,last){im.onerror=()=>{if(im.src.includes('library_600x900')){im.src=im.src.replace('library_600x900.jpg','header.jpg')}else last()}}
 function shrink(file,cb){const r=new FileReader();r.onload=()=>{const im=new Image();im.onload=()=>{const s=Math.min(1,200/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=Math.round(im.width*s);c.height=Math.round(im.height*s);c.getContext('2d').drawImage(im,0,0,c.width,c.height);cb(c.toDataURL('image/jpeg',.72))};im.onerror=()=>cb(null);im.src=r.result};r.onerror=()=>cb(null);r.readAsDataURL(file)}
 function makeList(key,hasTag){
  let items=S.get(key,[]);
@@ -206,7 +215,7 @@ function makeList(key,hasTag){
  function poster(it,i){
   const b=document.createElement('label');b.title='Tap to add a poster';
   b.className='pst';
-  if(it.im){const im=document.createElement('img');im.src=it.im;im.alt='';b.appendChild(im)}
+  if(it.im){const im=document.createElement('img');im.loading='lazy';im.alt='';fb(im,()=>{im.remove();b.prepend(ICON[it.g]||'🎞️')});im.src=it.im;b.appendChild(im)}
   else{let h=0;for(const ch of it.t)h=(h*31+ch.charCodeAt(0))%360;b.style.background='linear-gradient(135deg,hsl('+(190+h%50)+' 80% 82%),hsl('+(40+h%20)+' 95% 80%))';b.append(ICON[it.g]||'🎞️')}
   const f=document.createElement('input');f.type='file';f.accept='image/*';f.setAttribute('aria-label','Add poster');
   f.onchange=()=>{const file=f.files[0];if(!file)return;shrink(file,d=>{if(d){items[i].im=d;save();draw()}})};
@@ -226,8 +235,19 @@ function makeList(key,hasTag){
    x.onclick=()=>{items.splice(i,1);save();draw()};
    li.appendChild(x);ul.appendChild(li)});
  }
- function add(){const v=inp.value.trim();if(!v)return;items.unshift({t:v,g:tag?tag.value:'',x:false});inp.value='';save();draw();ul.firstChild.classList.add('new')}
- $(key+'-btn').onclick=add;
+ const nz=s=>s.toLowerCase().replace(/[^a-z0-9]/g,'');
+ let res=[],tm=0,sg=null;
+ if(hasTag){sg=document.createElement('div');sg.className='sg';inp.parentNode.after(sg);
+  inp.addEventListener('input',()=>{clearTimeout(tm);const q=inp.value.trim();if(q.length<2){res=[];sg.innerHTML='';return}tm=setTimeout(()=>look(q),350)})}
+ async function look(q){try{const r=await fetch('/api/search?type='+key+'&q='+encodeURIComponent(q));if(!r.ok)throw 0;const j=await r.json();if(q!==inp.value.trim())return;res=j.results||[];sg.innerHTML='';
+  res.forEach(m=>{const b=document.createElement('button');b.className='sgi';if(m.poster){const im=document.createElement('img');im.alt='';fb(im,()=>im.remove());im.src=m.poster;b.appendChild(im)}
+   const sp=document.createElement('span');sp.textContent=m.title;const y=document.createElement('small');y.textContent=m.year||'';sp.appendChild(y);b.appendChild(sp);b.onclick=()=>add(m);sg.appendChild(b)})}catch(e){res=[];sg.innerHTML=''}}
+ function add(m){const v=inp.value.trim();if(!v&&!m)return;if(!m&&res[0]&&nz(v)&&nz(res[0].title)===nz(v))m=res[0];
+  const it={t:m?m.title:v,g:tag?tag.value:'',x:false};
+  if(m&&m.poster)it.im=m.poster;
+  if(m&&key==='watch'){if(m.kind==='tv'&&it.g==='Movie')it.g='Series';if(m.kind==='movie'&&it.g==='Series')it.g='Movie'}
+  items.unshift(it);inp.value='';res=[];if(sg)sg.innerHTML='';save();draw();ul.firstChild.classList.add('new')}
+ $(key+'-btn').onclick=()=>add();
  inp.addEventListener('keydown',e=>{if(e.key==='Enter')add()});
  draw();
 }
