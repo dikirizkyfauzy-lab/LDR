@@ -1,8 +1,5 @@
-// Vercel serverless function: GET /api/search?type=watch|game&q=...
-// Movies/TV: TMDB (needs TMDB_KEY in Vercel Environment Variables)
-// Games: Steam store search (no key needed)
 module.exports = async (req, res) => {
-  const { type, q } = req.query || {};
+  const { type, q, debug } = req.query || {};
   if (!q || q.length < 2) return res.status(200).json({ results: [] });
   try {
     let results = [];
@@ -18,11 +15,21 @@ module.exports = async (req, res) => {
           poster: 'https://cdn.cloudflare.steamstatic.com/steam/apps/' + g.id + '/library_600x900.jpg'
         }));
     } else {
-      const k = process.env.TMDB_KEY || '';
-      const bearer = k.length > 40; // long token = "API Read Access Token"
+      const k = (process.env.TMDB_KEY || '').trim();
+      const bearer = k.length > 40;
       const url = 'https://api.themoviedb.org/3/search/multi?include_adult=false&query=' + encodeURIComponent(q) +
         (bearer ? '' : '&api_key=' + encodeURIComponent(k));
-      const j = await (await fetch(url, bearer ? { headers: { Authorization: 'Bearer ' + k } } : {})).json();
+      const r = await fetch(url, bearer ? { headers: { Authorization: 'Bearer ' + k } } : {});
+      const j = await r.json();
+      if (debug) {
+        return res.status(200).json({
+          keyLength: k.length,
+          keyType: bearer ? 'token' : 'api_key',
+          status: r.status,
+          tmdbMessage: j.status_message || 'ok',
+          count: (j.results || []).length
+        });
+      }
       results = (j.results || [])
         .filter(m => m.media_type === 'movie' || m.media_type === 'tv')
         .slice(0, 6)
@@ -36,6 +43,6 @@ module.exports = async (req, res) => {
     if (results.length) res.setHeader('Cache-Control', 's-maxage=86400, stale-while-revalidate');
     return res.status(200).json({ results });
   } catch (e) {
-    return res.status(200).json({ results: [] });
+    return res.status(200).json({ results: [], error: debug ? String(e) : undefined });
   }
 };
