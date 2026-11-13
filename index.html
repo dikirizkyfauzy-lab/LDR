@@ -164,12 +164,60 @@ li.done .pst{filter:grayscale(.6);opacity:.7}
 
 </section>
 
+<section class="card" id="syncc"><h2>🔗 Sync Our Devices</h2><div id="syncbox"></div></section>
+
 <footer>Made with love, until the distance becomes zero 🌙</footer>
 <div class="cr">Movie &amp; TV data from <a href="https://www.themoviedb.org" target="_blank" rel="noopener">TMDB</a>. This product uses the TMDB API but is not endorsed or certified by TMDB. Game images from <a href="https://store.steampowered.com" target="_blank" rel="noopener">Steam</a>.</div>
 </div>
 
 <script>
-const S={get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+const S={get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}if(SYNC.includes(k))queue(k,v)}};
+
+/* sync between devices */
+const SYNC=['ldrStart','watch','game','meet','log0','log1'];
+const RR={};
+let room=S.get('room','')||'',pend={},ptm=0,busy=false;
+function queue(k,v){if(!room)return;pend[k]=v;clearTimeout(ptm);ptm=setTimeout(()=>sync(),600)}
+async function api(body){const r=await fetch('/api/data',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});if(!r.ok)throw new Error(String(r.status));return r.json()}
+function stat(t){const e=document.getElementById('syncst');if(e)e.textContent=t}
+async function sync(first){
+ if(!room||busy)return;busy=true;
+ let set={};
+ try{
+  set=pend;pend={};
+  const j=await api({room,set});
+  const rem=j.state||{};
+  if(first){
+   const up={};
+   SYNC.forEach(k=>{if(!(k in rem)){const lv=localStorage.getItem(k);if(lv!==null)up[k]=JSON.parse(lv)}});
+   if(Object.keys(up).length){await api({room,set:up});Object.assign(rem,up)}
+  }
+  SYNC.forEach(k=>{
+   if(k in pend||!(k in rem))return;
+   const rv=JSON.stringify(rem[k]);
+   if(localStorage.getItem(k)!==rv){try{localStorage.setItem(k,rv)}catch(e){}if(RR[k])RR[k]()}
+  });
+  stat('Synced ✓ '+new Date().toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'}));
+ }catch(e){
+  pend=Object.assign({},set,pend);
+  stat(e.message==='404'?'Sync is not installed yet (api/data.js is missing).':e.message==='503'?'The database is not connected yet.':'Sync problem. Check your connection and try again.');
+ }
+ busy=false;
+}
+function drawSync(){
+ const b=document.getElementById('syncbox');
+ if(room){
+  b.innerHTML='<p class="sub">Connected ✓ Everything you save appears on every device that uses the same secret code.</p><div class="big" id="syncst" style="margin:0 0 10px">Syncing…</div><button class="ghost" id="syncoff">Disconnect this device</button>';
+  document.getElementById('syncoff').onclick=()=>{room='';S.set('room','');drawSync()};
+ }else{
+  b.innerHTML='<p class="sub">Use the same secret code on both phones to share everything. Pick something long that only you two know.</p><div class="add"><input type="text" id="syncin" placeholder="Our secret code (min. 8 characters)" maxlength="64" autocomplete="off" autocapitalize="off"><button class="blue" id="syncgo">Connect</button></div><div class="big" id="syncst" style="margin:0"></div>';
+  document.getElementById('syncgo').onclick=()=>{const v=document.getElementById('syncin').value.trim();if(v.length<8){stat('Please use at least 8 characters.');return}room=v;S.set('room',v);drawSync();sync(true)};
+ }
+}
+RR.ldrStart=()=>renderCounter();
+RR.log0=RR.log1=()=>{if(document.getElementById('lglist'))renderLog(ft)};
+setInterval(()=>{if(!document.hidden)sync()},30000);
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)sync()});
 const $=id=>document.getElementById(id);
 
 /* names */
@@ -249,6 +297,7 @@ function makeList(key,hasTag){
   items.unshift(it);inp.value='';res=[];if(sg)sg.innerHTML='';save();draw();ul.firstChild.classList.add('new')}
  $(key+'-btn').onclick=()=>add();
  inp.addEventListener('keydown',e=>{if(e.key==='Enter')add()});
+ RR[key]=()=>{items=S.get(key,[]);draw()};
  draw();
 }
 makeList('watch',true);makeList('game',true);makeList('meet',false);
@@ -314,6 +363,7 @@ function renderLog(i){
  });
 }
 $('t1').onclick=()=>{ft=0;drawFly()};$('t2').onclick=()=>{ft=1;drawFly()};drawFly();
+drawSync();if(room)sync(true);
 </script>
 </body>
 </html>
